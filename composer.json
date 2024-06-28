@@ -1,0 +1,20 @@
+{
+    "name": "finalx/laravel",
+    "type": "library",
+    "license": "MIT",
+    "version": "0.0.1",
+    "autoload": {
+        "psr-4": {
+            "Finalx\\Laravel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "D.M",
+            "email": "578328962@qq.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^10.48"
+    }
+}
