@@ -20,14 +20,14 @@ class Response
         ], $code, $header, JSON_UNESCAPED_UNICODE);
     }
 
-    static public function error($exceptions)
+    static public function exception($exceptions)
     {
         $exceptions->render(function (Exception $e) {
             if ($e instanceof HttpException) $code = $e->getStatusCode();
             else if ($e instanceof AuthenticationException) $code = JsonResponse::HTTP_UNAUTHORIZED;
             else $code = $e->getCode() ? $e->getCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
 
-            return self::respond($e->getMessage(), $code);
+            return self::respond(null, $e->getMessage(), $code);
         });
     }
 }
