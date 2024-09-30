@@ -18,7 +18,7 @@ class GlobalResponseMiddleware
     {
         $res = $next($request);
         // 错误的不处理，直接往外抛，交给全局异常去处理
-        if (!$res->isOk() || $res->isClientError() || $res->isServerError()) return $res;
+        if ($res->isClientError() || $res->isServerError()) return $res;
 
         $content = $res->getContent();
         $canJson = json_validate($content);
