@@ -43,14 +43,13 @@ class Response
      * @param mixed $exceptions 要处理的异常
      * @return void
      */
-    static public function exception($exceptions)
+    static public function exception(Exception $e): JsonResponse
     {
-        $exceptions->render(function (Exception $e) {
-            if ($e instanceof HttpException) $code = $e->getStatusCode();
-            else if ($e instanceof AuthenticationException) $code = JsonResponse::HTTP_UNAUTHORIZED;
-            else $code = $e->getCode() ? $e->getCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
 
-            return self::respond(false, $e->getMessage(), $code);
-        });
+        if ($e instanceof HttpException) $code = $e->getStatusCode();
+        else if ($e instanceof AuthenticationException) $code = JsonResponse::HTTP_UNAUTHORIZED;
+        else $code = $e->getCode() ? $e->getCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
+
+        return self::respond(false, $e->getMessage(), $code);
     }
 }

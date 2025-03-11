@@ -21,7 +21,13 @@ class GlobalResponseMiddleware
         if ($res->isClientError() || $res->isServerError()) return $res;
 
         $content = $res->getContent();
-        $canJson = json_validate($content);
+
+        if (version_compare(PHP_VERSION, '8.3.0', '>=')) {
+            $canJson = json_validate($content);
+        } else {
+            json_decode($content);
+            $canJson = (json_last_error() === JSON_ERROR_NONE);
+        }
         return JsonResponse::respond($canJson ? json_decode($content) : $content);
     }
 }
