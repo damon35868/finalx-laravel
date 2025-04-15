@@ -9,10 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GlobalResponseMiddleware
 {
-
-    function __construct(
-        private array $excludes = ['/']
-    ) {}
+    private array $excludes = ['/'];
 
     /**
      * Handle an incoming request.

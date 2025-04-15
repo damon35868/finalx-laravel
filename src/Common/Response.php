@@ -23,7 +23,10 @@ class Response
      */
     static public function respond($data = null, $message = '请求成功', $code = JsonResponse::HTTP_OK, array $header = [])
     {
-        $res = [
+        $res = $data === -1 ? [
+            'code' => $code,
+            'message' => $message,
+        ] : [
             'code' => $code,
             'message' => $message,
             'data' => $data
@@ -46,6 +49,6 @@ class Response
         else if ($e instanceof AuthenticationException) $code = JsonResponse::HTTP_UNAUTHORIZED;
         else $code = $e->getCode() ? $e->getCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
 
-        return self::respond(false, $e->getMessage(), $code);
+        return self::respond(-1, $e->getMessage(), $code);
     }
 }
