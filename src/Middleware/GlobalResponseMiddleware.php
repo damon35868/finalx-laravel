@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GlobalResponseMiddleware
 {
+
+    function __construct(
+        private array $excludes = ['/']
+    ) {}
+
     /**
      * Handle an incoming request.
      *
@@ -19,9 +24,9 @@ class GlobalResponseMiddleware
         $res = $next($request);
         // 错误的不处理，直接往外抛，交给全局异常去处理
         if ($res->isClientError() || $res->isServerError()) return $res;
+        if (in_array($request?->route()?->uri, $this->excludes)) return $res;
 
         $content = $res->getContent();
-
         if (version_compare(PHP_VERSION, '8.3.0', '>=')) {
             $canJson = json_validate($content);
         } else {

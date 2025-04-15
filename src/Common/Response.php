@@ -23,18 +23,14 @@ class Response
      */
     static public function respond($data = null, $message = '请求成功', $code = JsonResponse::HTTP_OK, array $header = [])
     {
-        $res = $data === false ? [
-            'code' => $code,
-            'message' => $message
-        ] : [
+        $res = [
             'code' => $code,
             'message' => $message,
-            'data' => $data ? $data : null
+            'data' => $data
         ];
 
         return response()->json($res, $code, $header, JSON_UNESCAPED_UNICODE);
     }
-
 
     /**
      * 处理异常并返回标准化的 JSON 响应
