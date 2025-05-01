@@ -23,16 +23,27 @@ class Response
      */
     static public function respond($data = null, $message = '请求成功', $code = JsonResponse::HTTP_OK, array $header = [])
     {
-        $res = $data === -1 ? [
-            'code' => $code,
-            'message' => $message,
-        ] : [
+        $res = [
             'code' => $code,
             'message' => $message,
             'data' => $data
         ];
-
         return response()->json($res, $code, $header, JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * @description: 仅返回状态码和信息
+     * @param {*} $message
+     * @param {*} $code
+     * @param {array} $header
+     * @return {*}
+     */
+    static public function notDataRespond($message = '请求成功', $code = JsonResponse::HTTP_OK, array $header = [])
+    {
+        return response()->json([
+            'code' => $code,
+            'message' => $message,
+        ], $code, $header, JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -44,11 +55,10 @@ class Response
      */
     static public function exception(Exception $e): JsonResponse
     {
-
         if ($e instanceof HttpException) $code = $e->getStatusCode();
         else if ($e instanceof AuthenticationException) $code = JsonResponse::HTTP_UNAUTHORIZED;
         else $code = $e->getCode() ? $e->getCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
 
-        return self::respond(-1, $e->getMessage(), $code);
+        return self::notDataRespond($e->getMessage(), $code);
     }
 }

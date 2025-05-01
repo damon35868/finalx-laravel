@@ -2,9 +2,9 @@
 
 namespace Finalx\Laravel\Common;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use support\Db;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -38,7 +38,7 @@ class Page
 
         if (!$tableName && !$model) throw new NotFoundHttpException('找不到该表');
 
-        $query = $model ? (new $model)->query() : Db::table($tableName);
+        $query = $model ? (new $model)->query() : DB::table($tableName);
 
 
         // 用户输入
