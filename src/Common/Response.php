@@ -21,7 +21,7 @@ class Response
      * @param array $header 额外的 HTTP 头
      * @return JsonResponse
      */
-    static public function respond($data = null, $message = '请求成功', $code = JsonResponse::HTTP_OK, array $header = [])
+    static public function respond($data = null, $message = '请求成功', $code = JsonResponse::HTTP_OK, array $header = []): JsonResponse
     {
         $res = [
             'code' => $code,
