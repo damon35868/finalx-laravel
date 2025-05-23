@@ -58,6 +58,7 @@ class Response
         if ($e instanceof HttpException) $code = $e->getStatusCode();
         else if ($e instanceof AuthenticationException) $code = JsonResponse::HTTP_UNAUTHORIZED;
         else $code = $e->getCode() ? $e->getCode() : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
+        $code = (!!$code && gettype($code)  === "integer") ? $code : JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
 
         return self::notDataRespond($e->getMessage(), $code);
     }
