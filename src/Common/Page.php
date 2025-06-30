@@ -2,9 +2,9 @@
 
 namespace Finalx\Laravel\Common;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -25,7 +25,7 @@ class Page
     {
 
         $model = $params['model'] ?? null;
-        $tableName = $params['tableName'] ?? '';
+        $tableName = $params['tableName'] ?? ($model ? (new $model)->getTable() : '');;
         $where = $params['where'] ?? null;
         $orderBy = $params['orderBy'] ?? null;
         $select = $params['select'] ?? null;
